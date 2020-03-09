@@ -1,4 +1,4 @@
-const https = require('https')
+const Data = './data.json'
 const url = 'https://success.spidergap.com/partners.json'
 const settings = {method: 'Get'}
 
@@ -11,27 +11,16 @@ const d = 100 // Search Radius in km
 
 
 // FUNCTIONS
+// =========
+
+// Fetch list of partners from supplied URL
 function fetchPartners() {
-    https.get(url, (res) => {
-        let body = ""
-
-        res.on("data", (chunk) => {
-            body += chunk
-        })
-
-        res.on("end", () => {
-            try {
-                let json = JSON.parse(body)
-                printNearbyPartners(json)
-            } catch (error) {
-                console.error(error.message)
-            }
-        })
-    }).on("error", (error) => {
-        console.error(error.message)
-    })
+    fetch(Data)
+        .then((res) => res.json())
+        .then((data) => printNearbyPartners(data))
 }
 
+// Calculate the distance between two points
 function distance(checkPoint, centerPoint) {
     let radCheckLat = Math.PI * checkPoint.lat/180 // convert lat to Radians
     let radCenterLat = Math.PI * centerPoint.lat/180 // convert lat to Radians
@@ -49,6 +38,7 @@ function distance(checkPoint, centerPoint) {
     return dist
 }
 
+// Convert GeoData from string to number
 function strToNum(string) {
     let commaPos = string.indexOf(',')
     let lat = parseFloat(string.substring(0, commaPos))
@@ -57,6 +47,7 @@ function strToNum(string) {
     return output
 }
 
+// Create array of partners within given radius
 function getNearbyPartners(partners) {
     const nearbyList = []
     partners.map((partner) => {
@@ -73,17 +64,13 @@ function getNearbyPartners(partners) {
     return sortedNearbyList
 }
 
+// Loop through results and print to console
 function printNearbyPartners(data){
-    const nearbyList = []; // RESULT
+    let list = document.querySelector('#partner-list')
     let nearbyPartners = getNearbyPartners(data)
-    console.log(`Partners within ${d}km of our office in London`)
-    console.log('-------------')
     nearbyPartners.map((partner) => {
-        console.log('-------------')
-        console.log('')
-        console.log(`Organization: ${partner.organization}`)
-        console.log(`Address: ${partner.address}`)
-        console.log(`Distance: ${partner.distance}km`)
-        console.log('')
+        let li = document.createElement('li')
+        li.innerHTML = partner.organization + `, ` + partner.address + `, ` + partner.distance + `Km`
+        list.appendChild(li)
     })
 }
