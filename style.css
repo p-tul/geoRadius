@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+}
+
+ul, ol {
+    list-style: none;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+	outline: none;
+}
+
+#radius {
+    margin-bottom: 2rem;
+}
+
+.center {
+    max-width: 600px;
+    margin: 200px auto;
+    text-align: center;
+    background-color: #d6d6d6;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 6px 8px 20px 0 rgba(204, 204, 204, 0.5);
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+table thead{
+    font-weight: bold;
+}
+
+tbody td {
+    border-bottom: 1px solid #bbb;
+    padding: 10px 10px 10px 0;
+    vertical-align: baseline;
+}

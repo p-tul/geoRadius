@@ -7,8 +7,13 @@ fetchPartners()
     
 // CONSTANTS
 const london = {lat: 51.515419, lng: -0.141099} //Londontown
-const d = 100 // Search Radius in km
+let d = 0 // Search Radius in km
+const radiusInput = document.getElementById('radius')
 
+radiusInput.addEventListener('input', function(e) {
+    d = this.valueAsNumber
+    fetchPartners()
+})
 
 // FUNCTIONS
 // =========
@@ -67,10 +72,13 @@ function getNearbyPartners(partners) {
 // Loop through results and print to console
 function printNearbyPartners(data){
     let list = document.querySelector('#partner-list')
+    list.innerHTML = ''
     let nearbyPartners = getNearbyPartners(data)
     nearbyPartners.map((partner) => {
-        let li = document.createElement('li')
-        li.innerHTML = partner.organization + `, ` + partner.address + `, ` + partner.distance + `Km`
-        list.appendChild(li)
+        let tr = document.createElement('tr')
+        tr.innerHTML =  '<td>' + partner.organization + '</td>' + 
+                        '<td>' + partner.address + '</td>' + 
+                        '<td>' + partner.distance + 'Km</td>'
+        list.appendChild(tr)
     })
 }
