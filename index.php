@@ -12,6 +12,7 @@
 
         <h4>What is your seach radius?</h4>
         <input type="number" id='radius' placeholder="Radius" autofocus>
+        <div><span id='resultCount'>0</span> Results</div>
     
         <table>
             <thead>

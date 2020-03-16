@@ -1,5 +1,5 @@
 const Data = './data.json'
-const url = 'https://success.spidergap.com/partners.json'
+// const url = 'https://success.spidergap.com/partners.json'
 const settings = {method: 'Get'}
 
 // script init
@@ -20,7 +20,7 @@ radiusInput.addEventListener('input', function(e) {
 
 // Fetch list of partners from supplied URL
 function fetchPartners() {
-    fetch(Data)
+    fetch('proxy.php')
         .then((res) => res.json())
         .then((data) => printNearbyPartners(data))
 }
@@ -74,6 +74,7 @@ function printNearbyPartners(data){
     let list = document.querySelector('#partner-list')
     list.innerHTML = ''
     let nearbyPartners = getNearbyPartners(data)
+    document.getElementById('resultCount').innerHTML = nearbyPartners.length
     nearbyPartners.map((partner) => {
         let tr = document.createElement('tr')
         tr.innerHTML =  '<td>' + partner.organization + '</td>' + 
